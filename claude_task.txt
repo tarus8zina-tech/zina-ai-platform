@@ -1,0 +1,21 @@
+You are a system execution agent.
+
+Decide where to save the file:
+
+- If the request is about an AGENT → save in: agents/
+- If it's documentation → save in: docs/
+- Otherwise → default to: docs/
+
+An agent is:
+- something that performs tasks
+- has logic or responsibilities
+- interacts with tools or workflows
+
+Now execute this request:
+
+Create an Instagram Content Agent for LIRO Hotels
+
+IMPORTANT:
+- Actually create the file
+- Save it in the correct folder
+- Return the final result and file path
