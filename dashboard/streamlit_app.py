@@ -133,7 +133,41 @@ def main():
     elif page == "Next Steps":
         render_next_steps_page()
 
+    _render_github_push()
     _render_task_generator()
+
+
+def _render_github_push():
+    st.markdown("---")
+    st.header("💾 Save to GitHub")
+
+    if st.button("💾 Save to GitHub", key="github_push_button"):
+        push_script = Path("push.sh")
+        if not push_script.exists():
+            st.error("`push.sh` not found in project root.")
+            return
+
+        with st.spinner("Pushing to GitHub..."):
+            try:
+                result = subprocess.run(
+                    ["bash", "push.sh"],
+                    capture_output=True,
+                    text=True,
+                    timeout=60,
+                )
+                output = (result.stdout + result.stderr).strip()
+                if result.returncode == 0:
+                    st.success("Successfully pushed to GitHub.")
+                else:
+                    st.error("Push failed.")
+                if output:
+                    st.code(output, language="bash")
+            except FileNotFoundError:
+                st.error("`bash` not found. Cannot run push.sh.")
+            except subprocess.TimeoutExpired:
+                st.error("Push timed out after 60 seconds.")
+            except Exception as e:
+                st.error(f"Unexpected error: {e}")
 
 
 def _render_task_generator():
