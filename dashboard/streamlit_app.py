@@ -21,6 +21,7 @@ from dashboard.components.workflow_panel import render_workflows_page
 from dashboard.components.mcp_panel import render_mcp_page
 from dashboard.components.system_status import render_system_page
 from dashboard.components.next_steps import render_next_steps_page
+from dashboard.components.content_creator_panel import render_content_creator_page
 
 
 @st.cache_resource
@@ -60,6 +61,7 @@ def _render_sidebar(agent_count: int, tool_count: int, workflow_count: int) -> s
             "nav",
             [
                 "Overview",
+                "Content Creator",
                 "Agents",
                 "Tools",
                 "Workflows",
@@ -114,6 +116,9 @@ def main():
 
     if page == "Overview":
         render_overview(orchestrator, tool_registry, workflow_registry, mcp_registry)
+
+    elif page == "Content Creator":
+        render_content_creator_page(orchestrator)
 
     elif page == "Agents":
         render_agents_page(orchestrator, agent_names)

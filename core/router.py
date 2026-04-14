@@ -5,6 +5,11 @@ class Router:
     def route(self, task: str) -> str:
         task_lower = task.lower()
 
+        # Social media keywords are checked first — they are specific enough
+        # to override other domain matches (e.g. "hotel instagram post")
+        if any(word in task_lower for word in ["instagram", "social media", "caption", "hashtag", "carousel", "reel"]):
+            return "zina_content_creator_agent"
+
         if any(word in task_lower for word in ["hotel", "booking", "guest", "reservation"]):
             return "hotel_agent"
 
@@ -16,5 +21,10 @@ class Router:
 
         if any(word in task_lower for word in ["finance", "cost", "profit", "revenue"]):
             return "finance_agent"
+
+        # "content" and "post" are generic — only route to content creator
+        # when no other domain matched first
+        if any(word in task_lower for word in ["content", "post"]):
+            return "zina_content_creator_agent"
 
         return self.default_agent
